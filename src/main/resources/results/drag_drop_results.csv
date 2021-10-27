@@ -1,0 +1,24 @@
+-5000,Debit Side Account,FALSE
+-5000,Debit Side Amount,FALSE
+-5000,Credit Side Account,FALSE
+-5000,Credit Side Amount,FALSE
+5000,Debit Side Account,FALSE
+5000,Debit Side Amount,TRUE
+5000,Credit Side Account,FALSE
+5000,Credit Side Amount,TRUE
+BANK,Debit Side Account,TRUE
+BANK,Debit Side Amount,FALSE
+BANK,Credit Side Account,FALSE
+BANK,Credit Side Amount,FALSE
+SALES,Debit Side Account,FALSE
+SALES,Debit Side Amount,FALSE
+SALES,Credit Side Account,TRUE
+SALES,Credit Side Amount,FALSE
+OWNER'S EQUITY,Debit Side Account,FALSE
+OWNER'S EQUITY,Debit Side Amount,FALSE
+OWNER'S EQUITY,Credit Side Account,FALSE
+OWNER'S EQUITY,Credit Side Amount,FALSE
+LOAN,Debit Side Account,FALSE
+LOAN,Debit Side Amount,FALSE
+LOAN,Credit Side Account,FALSE
+LOAN,Credit Side Amount,FALSE
