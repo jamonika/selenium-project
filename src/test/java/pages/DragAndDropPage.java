@@ -2,14 +2,20 @@ package pages;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static java.nio.file.Files.readAllLines;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 public class DragAndDropPage extends Page{
@@ -59,6 +65,22 @@ public class DragAndDropPage extends Page{
     }
 
     public void dragAndDrop (String draggable, String destination) {
+        WebElement destinationWebElement = getDestinationWebElement(destination);
+        dragAndDrop(findDraggableByName(draggable), destinationWebElement);
+    }
+
+    public String getDisplayedResult () {
+        waitForElement(result);
+        return result.getText();
+    }
+
+    public boolean checkIfDraggableDroppedSuccessfully(String draggable, String destination) {
+        WebElement destinationWebElement = getDestinationWebElement(destination);
+        WebElement destinationCellContent = destinationWebElement.findElement(By.cssSelector("li"));
+        return destinationCellContent.getText().contains(draggable);
+    }
+
+    public WebElement getDestinationWebElement (String destination) {
         WebElement destinationWebElement = null;
 
         switch (destination) {
@@ -78,12 +100,11 @@ public class DragAndDropPage extends Page{
                 fail("Provided destination element does not exist");
         }
 
-        dragAndDrop(findDraggableByName(draggable), destinationWebElement);
+        return destinationWebElement;
     }
 
-    public String getDisplayedResult () {
-        waitForElement(result);
-        return result.getText();
+    public void refreshPage() {
+        driver.navigate().refresh();
     }
 
     @AllArgsConstructor
@@ -108,5 +129,14 @@ public class DragAndDropPage extends Page{
         CREDIT_SIDE_AMOUNT("Credit Side Amount");
 
         private String droppableValue;
+    }
+
+    public void assertThatResultIsCorrect(boolean result, String draggable, String droppable, List<String> correctResultsOfDragAndDrop) throws IOException {
+        for (String r: correctResultsOfDragAndDrop) {
+            List<String> correctResult = Arrays.asList(r.split(","));
+            if(correctResult.get(0).equals(draggable) && correctResult.get(1).equals(droppable)) {
+                assertTrue(Boolean.parseBoolean(correctResult.get(2)) == result);
+            }
+        }
     }
 }

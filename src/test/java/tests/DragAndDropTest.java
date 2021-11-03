@@ -4,10 +4,13 @@ import org.testng.annotations.Test;
 import configuration.BasicTestSetup;
 import pages.DragAndDropPage;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.nio.file.Files.readAllLines;
 import static org.testng.Assert.assertEquals;
 
 public class DragAndDropTest extends BasicTestSetup {
@@ -26,7 +29,7 @@ public class DragAndDropTest extends BasicTestSetup {
     }
 
     @Test
-    public void checkAllDragAndDropPossibilitiesResults() {
+    public void checkAllDragAndDropPossibilitiesResults() throws IOException {
         DragAndDropPage dragAndDropPage = new DragAndDropPage(webDriver);
         dragAndDropPage.openPage();
 
@@ -38,13 +41,15 @@ public class DragAndDropTest extends BasicTestSetup {
                 .map(DragAndDropPage.Droppable::getDroppableValue)
                 .collect(Collectors.toList());
 
-        String[] results = new String[draggableNames.size()*droppableNames.size()];
-        int i = 0;
+        Path resultsFilePath = Path.of("src", "main", "resources", "results").resolve("drag_drop_results.csv");
+        List<String> correctResultsOfDragAndDrop = readAllLines(resultsFilePath);
+
         for (String draggable : draggableNames) {
             for (String droppable : droppableNames) {
                 dragAndDropPage.dragAndDrop(draggable, droppable);
-                results[i] = null;
-                i ++;
+                boolean droppedSuccessfully = dragAndDropPage.checkIfDraggableDroppedSuccessfully(draggable,droppable);
+                dragAndDropPage.assertThatResultIsCorrect(droppedSuccessfully, draggable, droppable, correctResultsOfDragAndDrop);
+                dragAndDropPage.refreshPage();
             }
         }
     }
