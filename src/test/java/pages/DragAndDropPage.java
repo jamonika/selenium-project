@@ -131,7 +131,7 @@ public class DragAndDropPage extends Page{
         private String droppableValue;
     }
 
-    public void assertThatResultIsCorrect(boolean result, String draggable, String droppable, List<String> correctResultsOfDragAndDrop) throws IOException {
+    public void assertThatResultIsCorrect(boolean result, String draggable, String droppable, List<String> correctResultsOfDragAndDrop) {
         for (String r: correctResultsOfDragAndDrop) {
             List<String> correctResult = Arrays.asList(r.split(","));
             if(correctResult.get(0).equals(draggable) && correctResult.get(1).equals(droppable)) {

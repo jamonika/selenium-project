@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 
 import static java.nio.file.Files.readAllLines;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
 public class DragAndDropTest extends BasicTestSetup {
 
@@ -29,7 +30,7 @@ public class DragAndDropTest extends BasicTestSetup {
     }
 
     @Test
-    public void checkAllDragAndDropPossibilitiesResults() throws IOException {
+    public void checkAllDragAndDropPossibilitiesResults() {
         DragAndDropPage dragAndDropPage = new DragAndDropPage(webDriver);
         dragAndDropPage.openPage();
 
@@ -41,8 +42,7 @@ public class DragAndDropTest extends BasicTestSetup {
                 .map(DragAndDropPage.Droppable::getDroppableValue)
                 .collect(Collectors.toList());
 
-        Path resultsFilePath = Path.of("src", "main", "resources", "results").resolve("drag_drop_results.csv");
-        List<String> correctResultsOfDragAndDrop = readAllLines(resultsFilePath);
+        List<String> correctResultsOfDragAndDrop = readFileWithResults();
 
         for (String draggable : draggableNames) {
             for (String droppable : droppableNames) {
@@ -52,5 +52,15 @@ public class DragAndDropTest extends BasicTestSetup {
                 dragAndDropPage.refreshPage();
             }
         }
+    }
+
+    private List<String> readFileWithResults() {
+        Path resultsFilePath = Path.of("src", "main", "resources", "results").resolve("drag_drop_results.csv");
+        try {
+            return readAllLines(resultsFilePath);
+        } catch (IOException e) {
+            fail("Reading file unsuccessful");
+        }
+        return null;
     }
 }
