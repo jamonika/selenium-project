@@ -18,5 +18,6 @@ public class BasicTestSetup {
     @AfterTest
     public void afterTest() {
         webDriver.close();
+        webDriver.quit();
     }
 }
