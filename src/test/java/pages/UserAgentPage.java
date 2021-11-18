@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,6 +27,12 @@ public class UserAgentPage extends Page{
     public ParseUserAgentPage selectUserAgentText() {
         waitForElement(userAgent);
         userAgent.click();
+        closeAd();
         return new ParseUserAgentPage(driver);
+    }
+
+    private void closeAd() {
+        WebElement dismissButton = driver.findElement(By.id("dismiss-button"));
+        dismissButton.click();
     }
 }
