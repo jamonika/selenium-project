@@ -26,7 +26,7 @@ public class DragAndDropTest extends BasicTestSetup {
         dragAndDropPage.dragAndDrop("SALES", "Credit Side Account");
         dragAndDropPage.dragAndDrop("5000", "Credit Side Amount");
         String result = dragAndDropPage.getDisplayedResult();
-        assertEquals(result, "Perfect!");
+        assertEquals(result, "Perfectt!");
     }
 
     @Test
