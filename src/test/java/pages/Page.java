@@ -32,7 +32,11 @@ public abstract class Page {
     }
 
     protected void waitForElement (WebElement webElement) {
-        await().atMost(5, TimeUnit.SECONDS).until(() -> checkIfElementIsDisplayed(webElement));
+        waitForElement(webElement, 5);
+    }
+
+    protected void waitForElement (WebElement webElement, int timeout) {
+        await().atMost(timeout, TimeUnit.SECONDS).until(() -> checkIfElementIsDisplayed(webElement));
     }
 
     protected void waitForElement (List<WebElement> webElementList) {
