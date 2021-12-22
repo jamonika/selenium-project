@@ -1,24 +1,26 @@
 package jira.pages;
 
 import lombok.Getter;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.*;
 import pages.Page;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 @Getter
 public class MenuItemPage extends Page {
     private WebElement menuOption;
 
-    @FindBy(css = ".aui-dropdown2-in-header a")
-    List<WebElement> menuSubOptions;
+    //@FindBy(css = ".aui-dropdown2-in-header a")
+    private List<WebElement> menuSubOptions;
 
-    public MenuItemPage(WebDriver driver, WebElement menuOption) {
+    public MenuItemPage(WebDriver driver, WebElement menuOption, List<WebElement> menuSuboptions) {
         super(driver);
         this.menuOption = menuOption;
+        this.menuSubOptions = menuSuboptions;
     }
 
     @Override
@@ -36,4 +38,6 @@ public class MenuItemPage extends Page {
         subOption.click();
         System.out.println();
     }
+
+
 }
