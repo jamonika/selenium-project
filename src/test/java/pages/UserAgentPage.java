@@ -27,7 +27,7 @@ public class UserAgentPage extends Page{
     public ParseUserAgentPage selectUserAgentText() {
         waitForElement(userAgent);
         userAgent.click();
-        closeAd();
+        //closeAd();
         return new ParseUserAgentPage(driver);
     }
 

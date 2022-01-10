@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pages.Page;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,11 +31,15 @@ public class MenuPage extends Page {
         waitForElement(createButton, 60);
     }
 
-    public List<WebElement> getMenuElements() {
+    public List<String> getMenuElements() {
         return menuList.stream()
-                .filter(w -> !w.getText().isEmpty()).collect(Collectors.toList());
+                .map(w -> w.getText()).filter(w -> !w.isEmpty() & !w.contains("Help")).collect(Collectors.toList());
                 //.map(w -> new MenuSuboptionsPage(driver, w)).collect(Collectors.toList());
                 //menuList.stream().filter(webElement -> !webElement.findElement(By.tagName("a")).getText().isEmpty());
                 //.map(menuOption -> new MenuItemPage(driver, menuOption)).collect(Collectors.toList());
+    }
+
+    public WebElement getMenuElementByText(String menuText) {
+        return driver.findElement(By.linkText(menuText));
     }
 }
